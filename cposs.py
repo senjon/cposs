@@ -41,6 +41,7 @@ class cposs:
 
 		#Set the Glade file
 		self.gladefile = "Glade/home.glade"
+		self.gladefile_common = "Glade/common.glade"
 
 		self.wTree = gtk.glade.XML(self.gladefile, "Home")
 		self.win = self.wTree.get_widget("Home")

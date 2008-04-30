@@ -102,8 +102,9 @@ def ReturnBasket(BasketID):
             'Qty': Qty or '0',
             'ProductID': ProductID or '',
             'Heading':Heading or '',
-            'Price': '%0.2f' % Price or '0.00',
-            'Detail1': Detail1 or '',
+            #'Price': '%0.2f' % int(Price) or '0.00',
+            'Price': '0.00',            
+	    'Detail1': Detail1 or '',
             'Detail2': Detail2 or ''
             }
             )
@@ -122,7 +123,7 @@ def AddToBasket(ItemID,Qty=1,BasketID=0):
     	SELECT Qty, Price FROM basket_sub
 	LEFT JOIN products_sub ON basket_sub.ItemID=products_sub.ItemID 
 	LEFT JOIN products ON products.ProductID=products_sub.ProductID 
-	WHERE BasketID='%s' AND ItemID='%s' 
+	WHERE BasketID='%s' AND products_sub.ItemID='%s' 
 	LIMIT 1;
     """ % (BasketID, ItemID)
 

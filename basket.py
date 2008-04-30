@@ -5,7 +5,6 @@ except:
   	print "PyGTK Not found or not at correct level"
 try:
 	import sys
-	import Database.ProductData as ProductData
 	import gtk
 	import gtk.glade
 	import gobject
@@ -17,7 +16,10 @@ try:
 except:
 	print "Import error, cposs cannot start. Check your dependencies."
 	sys.exit(1)
-
+try:
+	import Database.ProductData as ProductData
+except:
+	print "Error loading modules."
 
 class Basket:
 	"""Class for the sale screen"""	
@@ -27,6 +29,7 @@ class Basket:
 
 		#setup the glade file
 		self.gladefile = "Glade/sales.glade"
+		self.gladefile_common = "Glade/common.glade"
 		#load the window from the glade file
 		self.wTree = gtk.glade.XML(self.gladefile, "Basket")
 		#Get the actual window widget
