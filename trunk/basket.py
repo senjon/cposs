@@ -15,7 +15,7 @@ try:
 	import locale
 	import gettext
 except:
-	print "Import error, epos cannot start. Check your dependencies."
+	print "Import error, cposs cannot start. Check your dependencies."
 	sys.exit(1)
 
 
@@ -171,5 +171,5 @@ class Basket:
 		gtk.main_quit()
 
 if __name__ == "__main__":
-	epos = Basket()
+	cposs = Basket()
 	gtk.main()
