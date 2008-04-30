@@ -1,0 +1,26 @@
+TODO
+- Discounts based from database (locality)
+	- Support price differences depending on shop (how do you print barcodes for this!?)
+- Print Vouchers or use pre-printed vochers (or both)
+- Enter weather information
+- Get weather forecast information from internet
+- Get currency/exchange rates from interent
+- Support multiple currency
+- Stock take
+- Stock transfer
+- Login screen
+- Timed updates (cronjobs - will that mean that windows doesn't work?)
+	- Copy all information from the website for mulimedia screen(s) in shop
+- Settings screen
+	- Address of website (somehow figure out addressing system too so that we can pull up the correct page for product information)
+	- Automatically add to basket on scan
+	- Change barcode reader signout ASCII
+- Second screen showing customer display
+	- Show the website when a product is added
+- Second screen showing webpage for multimedia screen (nice transitions between pages)
+- Add a widget allowing changing of quantity to add to basket (press before you scan)
+- Money counting function
+
+
+UNLIKELY ADDITIONS
+- Credit card processing
