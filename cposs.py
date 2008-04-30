@@ -18,14 +18,14 @@ try:
 	import locale
 	import gettext
 except:
-	print "Import error, epos cannot start. Check your dependencies."
+	print "Import error, cposs cannot start. Check your dependencies."
 	sys.exit(1)
 
-FILE_EXT = "epos"
-APP_NAME = "ePoS"
+FILE_EXT = "cposs"
+APP_NAME = "cposs"
 
-class epos:
-	"""The ePoS"""
+class cposs:
+	"""The cposs"""
 
 	def __init__(self):
 
@@ -124,6 +124,6 @@ class epos:
 		error_dlg.destroy()
 
 if __name__ == "__main__":
-	epos = epos()
+	cposs = cposs()
 	gtk.main()
 	
