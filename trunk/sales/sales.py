@@ -16,27 +16,24 @@ try:
 except:
 	print "Import error, cposs cannot start. Check your dependencies."
 	sys.exit(1)
-try:
-	import Database.ProductData as ProductData
-except:
-	print "Error loading modules."
 
-class Basket:
+
+class sales:
 	"""Class for the sale screen"""	
 
-	def __init__(self, basketid=None):
+	def __init__(self, parent, tab, basketid=None):
 		"""Initiallise the Basket, load it up in gtk"""
 
-		#setup the glade file
+		self.parent=parent
+
+		#Set the Glade file
 		self.gladefile = "Glade/sales.glade"
-		self.gladefile_common = "Glade/common.glade"
-		#load the window from the glade file
-		self.wTree = gtk.glade.XML(self.gladefile, "Basket")
-		#Get the actual window widget
-		self.win = self.wTree.get_widget("Basket")
-		#maximise it
-		self.win.maximize()
-		#self.win.fullscreen()
+
+		self.wTree = gtk.glade.XML(self.gladefile,"vbox1");
+		_label = gtk.Label();
+        	_label.set_text("Sales Screen")
+        	
+		tab.append_page(self.wTree.get_widget("vbox1"),_label);
 
 		#check to see if the basketid has been passed
 		self.basketid = basketid or "2"
@@ -53,9 +50,6 @@ class Basket:
         	txtBarcode.connect("key_press_event",self.OnBarcodeChange)
 
 		
-		#Initiate a database connection
-		self.db=ProductData
-
 		#Initiate the list (sale & return)
 		self.initLists()
 		
@@ -77,7 +71,7 @@ class Basket:
 
 	def FillBasket(self):
 	  	"""Called to fill the sale list."""
-		BasketDict=self.db.ReturnBasket(self.basketid)
+		BasketDict=self.parent.database.ReturnBasket(self.basketid)
 		for ItemDetail in BasketDict:
 			self.lstSale_list.append([ItemDetail["ItemID"],ItemDetail["Heading"],
                                                        ItemDetail["Detail1"],ItemDetail["Detail2"],
@@ -111,7 +105,7 @@ class Basket:
 			"""Called to add (or remove using negative qty) from the basket."""
 
 			#Add item to database
-			qty=self.db.AddToBasket(itemid,quantity,self.basketid)
+			qty=self.parent.database.AddToBasket(itemid,quantity,self.basketid)
 			print qty
 			#Loop through all rows and update if necesary
 			iter = self.lstSale_list.get_iter_root()

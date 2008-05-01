@@ -69,8 +69,7 @@ class home:
 		ItemID=int(self.wTree.get_widget("txtBarcode").get_text() or 0)
 		logging.debug('Barcode changed to %s', ItemID)
 		self.parent.printme()
-        	ItemDetails=self.parent.ProductData.ProductDictionary(ItemID) 
-        	ItemDetails=self.parent.ProductData.ProductDictionary(ItemID) 
+        	ItemDetails=self.parent.database.ProductDictionary(ItemID) 
         	for ControlName in [ "Heading", "Detail1", "Detail2", "Price" ]:
 			self.wTree.get_widget(ControlName).set_text("%s" % ItemDetails[ControlName])
 		#Simply adds text to the buffer which is being shown in the textarea		
