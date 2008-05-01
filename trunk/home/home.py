@@ -16,36 +16,32 @@ try:
 	import locale
 	import gettext
 except:
-	print "Import error, cposs cannot start. Check your dependencies."
+	print "Import error, home cannot start. Check your dependencies."
 	sys.exit(1)
 
-try:
-	import basket
-	import Database.ProductData as ProductData
-except:
-	print "Some modules not loaded."
+FILE_EXT = "home"
+APP_NAME = "home"
 
-FILE_EXT = "cposs"
-APP_NAME = "cposs"
+class home:
+	"""The home class"""
 
-class cposs:
-	"""The cposs class"""
-
-	def __init__(self):
-
-
-
+	def __init__(self, parent, tab):
+		
+		self.parent=parent
 
 		# Set the project file
 		self.project_file = ""
 
 		#Set the Glade file
 		self.gladefile = "Glade/home.glade"
-		self.gladefile_common = "Glade/common.glade"
 
-		self.wTree = gtk.glade.XML(self.gladefile, "Home")
-		self.win = self.wTree.get_widget("Home")
-		self.win.maximize()
+		self.wTree = gtk.glade.XML(self.gladefile,"vbox1");
+		_label = gtk.Label();
+        	_label.set_text("Home Screen")
+        	
+		tab.append_page(self.wTree.get_widget("vbox1"),_label);
+
+		parent.printme()
 
 		#Initiate the textview element on the GUI
 		self.logwindowview=self.wTree.get_widget("Description")
@@ -72,7 +68,9 @@ class cposs:
 		"""Called when the user types in the text area."""
 		ItemID=int(self.wTree.get_widget("txtBarcode").get_text() or 0)
 		logging.debug('Barcode changed to %s', ItemID)
-        	ItemDetails=ProductData.ProductDictionary(ItemID) 
+		self.parent.printme()
+        	ItemDetails=self.parent.ProductData.ProductDictionary(ItemID) 
+        	ItemDetails=self.parent.ProductData.ProductDictionary(ItemID) 
         	for ControlName in [ "Heading", "Detail1", "Detail2", "Price" ]:
 			self.wTree.get_widget(ControlName).set_text("%s" % ItemDetails[ControlName])
 		#Simply adds text to the buffer which is being shown in the textarea		
@@ -83,6 +81,9 @@ class cposs:
 		"""Called when we want to take the product to the sale screen"""
 		basketScreen=basket.Basket()
 
+	def printme(self):
+		print "Shit it printed"
+	
 	def show_error_dlg(self, error_string):
 		"""This Function is used to show an error dialog when
 		an error occurs.
@@ -96,6 +97,6 @@ class cposs:
 		error_dlg.destroy()
 
 if __name__ == "__main__":
-	cposs = cposs()
+	home = home()
 	gtk.main()
 	
