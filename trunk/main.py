@@ -13,44 +13,57 @@ try:
 	import logging
 	import shelve
 	import os
+	from os.path import abspath, dirname, join, pardir
+
 	import locale
 	import gettext
 except:
 	print "Import error, cposs cannot start. Check your dependencies."
 	sys.exit(1)
-import home.home as home
-import sales.sales as sales
-import Database.ProductData as ProductData
-try:
-	import home.home as home
-	import sales.sales as sales
-	import Database.ProductData as ProductData
-except:
-	print "Some modules could not be loaded."
+import view.home as home
+import view.sales as sales
+import view.settings as settings
+import controller.settings as ctrlsettings
+import controller.ProductData as ctrlproductdata
+
 
 FILE_EXT = "cposs"
 APP_NAME = "cposs"
+
+
+#Translation stuff
+
 
 
 class cposs:
 	"""The cposs class"""
 
 	def __init__(self):
-		
-		self.database=ProductData
+		self._=cposs.trans(self)
+		global _
+		_=self._
+		import __builtin__
+		__builtin__._ = _
+
+
+		print _("Hello world")
+		self.database=ctrlproductdata
+		self.mysettings=ctrlsettings.Settings()
 
 		# Set the project file
 		self.project_file = ""
 
 		#Set the Glade file
-		self.gladefile = "Glade/main.glade"
-		self.gladefile_common = "Glade/common.glade"
+		self.gladefile = "glade/main.glade"
+		self.gladefile_common = "glade/common.glade"
 
 		self.wTree = gtk.glade.XML(self.gladefile, "Main")
 		self.win = self.wTree.get_widget("Main")
 		self.win.maximize()
 		self.wTab = self.wTree.get_widget("tabs")
 		
+		self.settings = settings.settings(self,self.wTab)
+
 		self.home = home.home(self,self.wTab)
 		self.sales = sales.sales(self,self.wTab)
 		self.sales2 = sales.sales(self,self.wTab,3)
@@ -61,11 +74,6 @@ class cposs:
 			"on_button1_clicked" : self.ViewSales,	
 			"on_button2_clicked" : self.on_Quit }
 		self.wTree.signal_autoconnect(dic)
-	def Sell(self):
-		"""Sell the scanned item"""
-		
-		self.wTab.next_page()
-		
 
 	def ViewSales(self, widget):
 		"""View Sales"""
@@ -74,12 +82,50 @@ class cposs:
 	def on_Quit(self, widget):
 		"""Called when the application is going to quit"""
 		gtk.main_quit()
-	def printme(self):
-		"""Print to test"""
-		print "Hello, I have accessed you from the parent.";
+
+	def trans(self):
+		#Get the local directory since we are not installing anything
+		self.local_path = os.path.realpath(os.path.dirname(sys.argv[0])) 
+		self.local_path=join(self.local_path,'data')
+		self.local_path=join(self.local_path,'languages')
+		print self.local_path
+		# Init the list of languages to support
+		langs = []
+		#Check the default locale
+		lc, encoding = locale.getdefaultlocale()
+		if (lc):
+			#If we have a default, it's the first in the list
+			langs = [lc]
+		# Now lets get all of the supported languages on the system
+		language = os.environ.get('LANGUAGE', None)
+		if (language):
+			"""langage comes back something like en_CA:en_US:en_GB:en
+			on linuxy systems, on Win32 it's nothing, so we need to
+			split it up into a list"""
+			langs += language.split(":")
+		"""Now add on to the back of the list the translations that we
+		know that we have, our defaults"""
+		langs += ["en_GB", "en_US", "cy"]
+
+		"""Now langs is a list of all of the languages that we are going
+		to try to use.  First we check the default, then what the system
+		told us, and finally the 'known' list"""
+		
+		gettext.install('en_US', self.local_path)
+		gettext.bindtextdomain(APP_NAME, self.local_path)
+		gettext.textdomain(APP_NAME)
+		gtk.glade.bindtextdomain(APP_NAME, self.local_path)
+		gtk.glade.textdomain(APP_NAME)
+		# Get the language to use
+		self.lang = gettext.translation(APP_NAME, self.local_path
+			, languages=langs, fallback = True)
+		"""Install the language, map _() (which we marked our
+		strings to translate with) to self.lang.gettext() which will
+		translate them."""
+		return self.lang.gettext
+
 
 if __name__ == "__main__":
 	cposs = cposs()
-	
 	gtk.main()
 	
