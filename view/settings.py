@@ -2,7 +2,7 @@ try:
  	import pygtk
   	pygtk.require("2.0")
 except:
-  	print "PyGTK Not found or not at correct level"
+  	print "PyGTK Not found or not at correct version"
 try:
 	import sys
 	import gtk
@@ -31,17 +31,23 @@ class settings:
 
 		self.wTree = gtk.glade.XML(self.gladefile,"vbox1");
 		_label = gtk.Label();
-        	_label.set_text("Settings")
+        	_label.set_text(_("Settings"))
         	
 		tab.append_page(self.wTree.get_widget("vbox1"),_label);
 
 		self.wTab=self.wTree.get_widget("ntbkSettings")
-		self.tab_display=self.LoadTab(self.wTab,'Display')		
-		self.tab_connectivity=self.LoadTab(self.wTab,'Connectivity')
+		self.tab = {}
 
+		self.tab_events={}
+		self.tab_events['Hardware']={'on_valBarcodeASCII_changed' : self.on_valBarcodeASCII_changed}
+
+		self.tab['Display']=self.LoadTab(self.wTab,_('Display Settings'),'Display')		
+		self.tab['Hardware']=self.LoadTab(self.wTab,_('Hardware Settings'),'Hardware')
 		
-		self.tab_display_settings = ['Name','Age','Car']
-		self.tab_connectivity_settings = ['Name3','Car2']
+		self.tab_settings = {}
+		self.tab_settings['Display'] = ['Name','Age','Car']
+		self.tab_settings['Hardware'] = ['BarcodeASCII','Car2']
+
 		self.LoadSettings()		
 
 
@@ -49,17 +55,19 @@ class settings:
 		dic = {"on_Basket_destroy" : self.on_Quit, "on_cmdSave_clicked" : self.SaveSettings}
 		self.wTree.signal_autoconnect(dic)
 		
-	def LoadTab(self,SettingsTab,tabname):
+	def LoadTab(self,tabinstance,tablabel,tabname):
 		display = gtk.glade.XML(self.gladefile,"tab%s" % tabname);
 		_label = gtk.Label();
-        	_label.set_text(tabname)        	
-		SettingsTab.append_page(display.get_widget("tab" + tabname),_label);
+        	_label.set_text(tablabel)        	
+		tabinstance.append_page(display.get_widget("tab" + tabname),_label);
+		if self.tab_events.get(tabname,None) is not None:
+			display.signal_autoconnect(self.tab_events[tabname])
 		return display
 
 	def LoadSettings(self):
 		# Load the settings for each tab
-		self._LoadSetting(self.tab_display,self.tab_display_settings)
-		self._LoadSetting(self.tab_connectivity,self.tab_connectivity_settings)
+		for name in self.tab:
+			self._LoadSetting(self.tab[name],self.tab_settings[name])
 
 	def _LoadSetting(self,wTree,settings):
 		for value in settings:
@@ -68,8 +76,8 @@ class settings:
 
 	def SaveSettings(self, widget):
 		# Load the settings for each tab
-		self._SaveSetting(self.tab_display,self.tab_display_settings)
-		self._SaveSetting(self.tab_connectivity,self.tab_connectivity_settings)
+		for name in self.tab:
+			self._SaveSetting(self.tab[name],self.tab_settings[name])
 		self.parent.mysettings.SaveSettings()
 
 	def _SaveSetting(self,wTree,settings):
@@ -79,9 +87,12 @@ class settings:
 
 	def on_Quit(self, widget):
 		"""Called when the application is going to quit"""
-		# Ask if we want to save the settings		
-		
+		# Ask if we want to save the settings				
 		gtk.main_quit()
+
+	def on_valBarcodeASCII_changed(self, widget, event):
+		"""Called when the field for the BarcodeASCII signout value is changed"""
+		print event
 
 if __name__ == "__main__":
 	cposs = settings()

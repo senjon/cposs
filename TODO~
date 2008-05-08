@@ -1,7 +1,4 @@
 TODO
-
-- FULLY INTERNATIONALISE
-
 - Discounts based from database (locality)
 	- Support price differences depending on shop (how do you print barcodes for this!?) - Should these be classed as discounts?
 	- Multi buy discounts
