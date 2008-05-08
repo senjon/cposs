@@ -4,7 +4,7 @@ try:
  	import pygtk
   	pygtk.require("2.0")
 except:
-  	print "PyGTK Not found"
+  	print _("PyGTK Not found")
 try:
 	import sys
 	import gtk
@@ -16,7 +16,7 @@ try:
 	import locale
 	import gettext
 except:
-	print "Import error, home cannot start. Check your dependencies."
+	print _("Import error, home cannot start. Check your dependencies.")
 	sys.exit(1)
 
 FILE_EXT = "home"
@@ -29,25 +29,29 @@ class home:
 		
 		self.parent=parent
 
+		#self.parent.printme()
 		# Set the project file
 		self.project_file = ""
 
 		#Set the Glade file
-		self.gladefile = "Glade/home.glade"
+		self.gladefile = "glade/home.glade"
 
 		self.wTree = gtk.glade.XML(self.gladefile,"vbox1");
 		_label = gtk.Label();
-        	_label.set_text("Home Screen")
+        	_label.set_text(_("Home Screen"))
         	
 		tab.append_page(self.wTree.get_widget("vbox1"),_label);
-
-		parent.printme()
 
 		#Initiate the textview element on the GUI
 		self.logwindowview=self.wTree.get_widget("Description")
 		self.bufferDescription=gtk.TextBuffer(None)
 		self.logwindowview.set_buffer(self.bufferDescription)
 	
+		self.labelNames=[ "Heading", "Detail1", "Detail2", "Price", "Unused1" , "Unused2" , "Unused3" ]
+		# Clear what is written on the labels by default
+		for ControlName in self.labelNames:
+			self.wTree.get_widget("lbl%s" % ControlName).set_text("")	
+
 		#Create the dictionary of events and create them
 		dic = {		"on_Home_destroy" : self.on_Quit
 				, "on_txtBarcode_changed" : self.OnBarcodeChange
@@ -68,11 +72,13 @@ class home:
 		"""Called when the user types in the text area."""
 		ItemID=int(self.wTree.get_widget("txtBarcode").get_text() or 0)
 		logging.debug('Barcode changed to %s', ItemID)
-		self.parent.printme()
         	ItemDetails=self.parent.database.ProductDictionary(ItemID) 
-        	for ControlName in [ "Heading", "Detail1", "Detail2", "Price" ]:
-			self.wTree.get_widget(ControlName).set_text("%s" % ItemDetails[ControlName])
-		#Simply adds text to the buffer which is being shown in the textarea		
+        	for ControlName in self.labelNames:
+			try:
+				self.wTree.get_widget("lbl%s" % ControlName).set_text("%s" % ItemDetails[ControlName] or "")
+			except:
+				"""Nothing defined"""
+		#Simply adds text to the buffer which is being shown in the textarea
 		self.bufferDescription.insert_at_cursor("%s" % ItemDetails["Description"],len("%s" % ItemDetails["Description"]))		
 		#print ItemDetails
 
@@ -80,9 +86,6 @@ class home:
 		"""Called when we want to take the product to the sale screen"""
 		basketScreen=basket.Basket()
 
-	def printme(self):
-		print "Shit it printed"
-	
 	def show_error_dlg(self, error_string):
 		"""This Function is used to show an error dialog when
 		an error occurs.

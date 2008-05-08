@@ -27,7 +27,7 @@ class sales:
 		self.parent=parent
 
 		#Set the Glade file
-		self.gladefile = "Glade/sales.glade"
+		self.gladefile = "glade/sales.glade"
 
 		self.wTree = gtk.glade.XML(self.gladefile,"vbox1");
 		_label = gtk.Label();
@@ -127,8 +127,10 @@ class sales:
 		self.lstSale = self.wTree.get_widget("lstSale")
 		self.lstReturn = self.wTree.get_widget("lstReturn")
 		
-		ColumnNames=["ItemID","Heading","Detail1","Detail2","Price","Quantity","Total"]
-		#self.ColumnNamesTranslated=["ItemID","Heading","Detail1","Detail2","Price","Quantity","Total"]
+		
+
+
+		ColumnNames=[_("ItemID"),_("Heading"),_("Detail1"),_("Detail2"),_("Price"),_("Quantity"),_("Total")]
 		ColumnIDs=[0,1,2,3,4,5]
 		#Don't need to store the widths to the class
 		ColumnWidths=[100,200,150,150,150,100]

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.2 on Thu May  1 20:18:09 2008 -->
+<!--Generated with glade3 3.4.2 on Tue May  6 19:25:55 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="Main">
     <property name="visible">True</property>
@@ -154,19 +154,8 @@
           <widget class="GtkNotebook" id="tabs">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="lblTab">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">This is the tab environment, see other glade files for tab content</property>
-              </widget>
-              <packing>
-                <property name="type">tab</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
+            <property name="has_focus">True</property>
+            <property name="is_focus">True</property>
           </widget>
           <packing>
             <property name="position">2</property>
