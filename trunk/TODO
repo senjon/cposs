@@ -1,8 +1,6 @@
 TODO
 
-- FULLY INTERNATIONALISE
-
-- Discounts based from database (locality)
+- Discounts based from database
 	- Support price differences depending on shop (how do you print barcodes for this!?) - Should these be classed as discounts?
 	- Multi buy discounts
 	- Reduction discounts (by % or monetary value)
@@ -15,24 +13,27 @@ TODO
 - Stock take
 - Stock transfer
 - Login screen
-	- Copy all information from the website for mulimedia screen(s) in shop
+- Copy all information from the website for mulimedia screen(s) in shop (maybe this should be a seperate application)
 - Settings screen
 	- Address of website (somehow figure out addressing system too so that we can pull up the correct page for product information)
-	- Automatically add to basket on scan
+	- Automatically add to basket on scan instead of showing details first option 
 	- Change barcode reader signout ASCII
 - Second screen showing customer display
-	- Show the website when a product is added
-- Second screen showing webpage for multimedia screen (nice transitions between pages)
+	- Show the website when a product is added if using a monitor
 - Add a widget allowing changing of quantity to add to basket (press before you scan)
 - Money counting function
-- Weight of item
+
 - Customer registration and logging of sales
 - Ability to review printed reciepts
 - WHEN INPUTING MONEY BRING UP A SCREEN TO COUNT WHICH COINS/NOTES (THIS WOULD ALLOW EXACT COIN/NOTE TRACKING) * this should be optional
-- Restore previously completed sales
-- Link returns to previous sales
-- Add a setting for Pre-string to table names in database (i.e. cposs_products , *_products)
+- Restore previously completed sales (why?)
 - UPDATING facility
+
+
+Low priority (but should be considered in current development)
+- Add translations
+- Weight of item (i.e quantity should be a floating point)?
+- Add a setting for Pre-string to table names in database (i.e. cposs_products , *_products)
 
 UNLIKELY ADDITIONS
 - Credit card processing

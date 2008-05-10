@@ -79,7 +79,7 @@ class home:
 			except:
 				"""Nothing defined"""
 		#Simply adds text to the buffer which is being shown in the textarea
-		self.bufferDescription.insert_at_cursor("%s" % ItemDetails["Description"],len("%s" % ItemDetails["Description"]))		
+		self.bufferDescription.set_text("%s" % ItemDetails["Description"],len("%s" % ItemDetails["Description"]))		
 		#print ItemDetails
 
 	def OnBasketClick(self, widget):

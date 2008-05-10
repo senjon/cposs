@@ -1,0 +1,3 @@
+Error on startup  -> main.py:133: GtkWarning: Theme file for Obsidian has no directories
+Maybe a local error, since I get the same thing with other Python projects.
+
