@@ -39,7 +39,7 @@ class settings:
 		self.tab = {}
 
 		self.tab_events={}
-		self.tab_events['Hardware']={'on_valBarcodeASCII_changed' : self.on_valBarcodeASCII_changed}
+		# self.tab_events['Hardware']={'on_valBarcodeASCII_changed' : self.on_valBarcodeASCII_changed}
 
 		self.tab['Display']=self.LoadTab(self.wTab,_('Display Settings'),'Display')		
 		self.tab['Hardware']=self.LoadTab(self.wTab,_('Hardware Settings'),'Hardware')
@@ -47,6 +47,11 @@ class settings:
 		self.tab_settings = {}
 		self.tab_settings['Display'] = ['Name','Age','Car']
 		self.tab_settings['Hardware'] = ['BarcodeASCII','Car2']
+		
+		#Problems automatically assigning keypressevent to gtkentry widget, use code below instead.		
+		valBarcodeASCII = self.tab['Hardware'].get_widget("valBarcodeASCII")
+        	valBarcodeASCII.connect("key_press_event",self.on_valBarcodeASCII_keypress)
+
 
 		self.LoadSettings()		
 
@@ -90,9 +95,13 @@ class settings:
 		# Ask if we want to save the settings				
 		gtk.main_quit()
 
-	def on_valBarcodeASCII_changed(self, widget, event):
+	def on_valBarcodeASCII_keypress(self, widget, event):
 		"""Called when the field for the BarcodeASCII signout value is changed"""
-		print event
+		keypress=gtk.gdk.keyval_name (event.keyval)
+	   	print "Key pressed in %s : %s" % (widget.name,keypress)
+		widget.set_text(keypress)
+		return True
+
 
 if __name__ == "__main__":
 	cposs = settings()

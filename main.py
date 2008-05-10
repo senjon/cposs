@@ -27,6 +27,7 @@ import controller.settings as ctrlsettings
 import controller.ProductData as ctrlproductdata
 
 
+
 FILE_EXT = "cposs"
 APP_NAME = "cposs"
 
@@ -62,7 +63,7 @@ class cposs:
 
 		self.home = home.home(self,self.wTab)
 		self.sales = sales.sales(self,self.wTab)
-		self.sales2 = sales.sales(self,self.wTab,3) # syntax for calling a specific BasketID
+		self.sales2 = sales.sales(self,self.wTab,6) # syntax for calling a specific BasketID
 
 	
 		#Create the dictionary of events and create them

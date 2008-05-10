@@ -56,7 +56,9 @@ class sales:
 		
 
 	def filter_func(self, model, iter,filtertype):
-		value = int(model.get_value(iter, 5))
+		# print "Quantity value for %s is %s" % (model.get_value(iter, self.Columns["ItemID"][0]) , model.get_value(iter, self.Columns["Quantity"][0]))
+      		value = int(model.get_value(iter, self.Columns["Quantity"][0]))
+
 		if filtertype=="posqty":
 			if value>0:
 				return True
@@ -65,7 +67,8 @@ class sales:
 				return True		
 		
 	def filter_lessthan_value(self, model, iter,comparedto):
-      		value = int(model.get_value(iter, 5))
+		print model.get_value(iter, self.Columns["Quantity"][0])
+      		value = int(model.get_value(iter, self.Columns["Quantity"][0]))
 		if value<comparedto:
 			return True
 
@@ -98,8 +101,11 @@ class sales:
 
 		if keypress in ["plus"]:
 			self.AddToBasket(itemid,self.qty)
+			widget.set_text("")
 		if keypress in ["minus"]:
 			self.AddToBasket(itemid,-self.qty)
+			widget.set_text("")
+		return True
 			
 	def AddToBasket(self,itemid,quantity):
 			"""Called to add (or remove using negative qty) from the basket."""
@@ -109,14 +115,27 @@ class sales:
 			print qty
 			#Loop through all rows and update if necesary
 			iter = self.lstSale_list.get_iter_root()
+			RowsChanged=None
 			while (iter):
 				# Get the itemid of current row
-				citemid = int(self.lstSale_list.get_value(iter, self.Columns["ItemID"][0]))
-				if itemid==citemid:
-					cqty = int(self.lstSale_list.get_value(iter, self.Columns["Quantity"][0]))
-					citemid = self.lstSale_list.set_value(iter, self.Columns["Quantity"][0], qty)
+				citemid = self.lstSale_list.get_value(iter, self.Columns["ItemID"][0])
+				# If either of the ids are ints then convert to unicode
+				print "%s == %s" % (unicode(itemid), unicode(citemid))
+				if unicode(itemid)==unicode(citemid):
+					# If we have a row with with the new item id then change the quantity to the new value
+					self.lstSale_list.set(iter, self.Columns["Quantity"][0], qty)
+					RowsChanged=1
 				# Get the next iter
 				iter = self.lstSale_list.iter_next(iter)
+			if RowsChanged== None:
+				# We didnt update a row in the previous loop, therefore we need to add the item to the list
+				BasketDict=self.parent.database.ReturnBasket(self.basketid)
+				for ItemDetail in BasketDict:
+					if ItemDetail["ItemID"]==itemid:
+						self.lstSale_list.append([ItemDetail["ItemID"],ItemDetail["Heading"],
+				                                       ItemDetail["Detail1"],ItemDetail["Detail2"],
+				                                       ItemDetail["Price"],ItemDetail["Qty"],ItemDetail["Qty"]])
+
 
 	def OnComplete(self, widget):
 		"""Called when sale is completed"""

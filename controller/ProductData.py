@@ -1,9 +1,15 @@
 import re
+class product:
+	def __init__(self):
+		self.ProductID = ""
+		self.ItemID = ""
+		self.Heading = ""
+		self.Description = ""
+		self.Detail1= ""
+		self.Detail2= ""
+		self.Price= ""
 
-class Product:
-	"""This class represents all the Product information"""
-
-	def __init__(self,result):
+	def set(self,result):
 		self.ProductID = result[0]
 		self.ItemID = result[1]
 		self.Heading = result[2]
@@ -22,6 +28,8 @@ class Product:
 			'Detail1':self.Detail1,
 			'Detail2':self.Detail2,
 			'Price':self.Price}
+
+
 
 class DatabaseConnect:
     """Connects to the database and keeps the connection open
@@ -62,8 +70,11 @@ def ProductDictionary(ItemID):
 
     #Close the database
     db.db.close()
-    
-    prod=Product(result[0])
+    prod=product()
+
+    if len(result)>0:
+    	prod.set(result[0])
+
     return prod.list()
    
 
@@ -112,7 +123,7 @@ def ReturnBasket(BasketID):
 
 
 def AddToBasket(ItemID,Qty=1,BasketID=0):
-    """Adds a product to the shopping basket given an ItemID and optionally a quantity and/or BasketID
+    """Adds a product to the shopping basket given an ItemID and optionally a quantity and/or BasketID and returns the new quantity for this item.
     """
 
     db=DatabaseConnect()
@@ -134,20 +145,24 @@ def AddToBasket(ItemID,Qty=1,BasketID=0):
     row = cur1.fetchone()
     
     if row == None:
+        new_quantity= int(Qty)
         print "Item Doesn't exist in Basket"
         SQLqry="""INSERT INTO basket_sub (`BasketID`, `ItemID`, `Qty`) VALUES ('%s','%s','%s')
         """ % (BasketID, ItemID, Qty)
-
+	
     elif row[0]<0:
+        new_quantity= int(row[0]) + int(Qty)
         #print "Item is being returned as there was a negative qty"
         SQLqry="""UPDATE basket_sub Set `Qty`=`Qty` + %s WHERE BasketID=%s AND ItemID=%s
         """ % (Qty, BasketID, ItemID)
         
     elif row[0]==0:
-        #print "None of this item in the Basket"
+	new_quantity= int(row[0]) + int(Qty) 
+       #print "None of this item in the Basket"
         SQLqry="""UPDATE basket_sub Set `Qty`=`Qty` + %s WHERE BasketID=%s AND ItemID=%s
         """ % (Qty, BasketID, ItemID)
     else:
+        new_quantity= int(row[0]) + int(Qty)
         print "We have a positive qty"
         SQLqry="""UPDATE basket_sub Set `Qty`=`Qty` + %s WHERE BasketID=%s AND ItemID=%s
         """ % (Qty, BasketID, ItemID)
@@ -162,5 +177,5 @@ def AddToBasket(ItemID,Qty=1,BasketID=0):
     cur2.close()
     db.db.commit()
 
-    
+    return new_quantity
 

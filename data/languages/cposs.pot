@@ -1,0 +1,186 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-08 17:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: view/home.py:7
+msgid "PyGTK Not found"
+msgstr ""
+
+#: view/home.py:19
+msgid "Import error, home cannot start. Check your dependencies."
+msgstr ""
+
+#: view/home.py:41
+msgid "Home Screen"
+msgstr ""
+
+#: view/sales.py:133
+msgid "ItemID"
+msgstr ""
+
+#: view/sales.py:133 tmp/home.glade.h:3
+msgid "Heading"
+msgstr ""
+
+#: view/sales.py:133 tmp/home.glade.h:1
+msgid "Detail1"
+msgstr ""
+
+#: view/sales.py:133 tmp/home.glade.h:2
+msgid "Detail2"
+msgstr ""
+
+#: view/sales.py:133 tmp/home.glade.h:5
+msgid "Price"
+msgstr ""
+
+#: view/sales.py:133
+msgid "Quantity"
+msgstr ""
+
+#: view/sales.py:133
+msgid "Total"
+msgstr ""
+
+#: view/settings.py:34
+msgid "Settings"
+msgstr ""
+
+#: view/settings.py:44
+msgid "Display Settings"
+msgstr ""
+
+#: view/settings.py:45
+msgid "Hardware Settings"
+msgstr ""
+
+#: tmp/main.glade.h:1 tmp/settings.glade.h:7 tmp/home.glade.h:7
+#: tmp/sales.glade.h:2 tmp/common.glade.h:1
+msgid "Sale"
+msgstr ""
+
+#: tmp/main.glade.h:2 tmp/common.glade.h:3
+msgid "_Edit"
+msgstr ""
+
+#: tmp/main.glade.h:3 tmp/common.glade.h:4
+msgid "_File"
+msgstr ""
+
+#: tmp/main.glade.h:4 tmp/common.glade.h:5
+msgid "_Help"
+msgstr ""
+
+#: tmp/main.glade.h:5 tmp/common.glade.h:6
+msgid "_View"
+msgstr ""
+
+#: tmp/main.glade.h:6 tmp/common.glade.h:7
+msgid "gtk-about"
+msgstr ""
+
+#: tmp/main.glade.h:7 tmp/common.glade.h:8
+msgid "gtk-copy"
+msgstr ""
+
+#: tmp/main.glade.h:8 tmp/common.glade.h:9
+msgid "gtk-cut"
+msgstr ""
+
+#: tmp/main.glade.h:9 tmp/common.glade.h:10
+msgid "gtk-delete"
+msgstr ""
+
+#: tmp/main.glade.h:10 tmp/common.glade.h:11
+msgid "gtk-new"
+msgstr ""
+
+#: tmp/main.glade.h:11 tmp/common.glade.h:12
+msgid "gtk-open"
+msgstr ""
+
+#: tmp/main.glade.h:12 tmp/common.glade.h:13
+msgid "gtk-paste"
+msgstr ""
+
+#: tmp/main.glade.h:13 tmp/common.glade.h:14
+msgid "gtk-quit"
+msgstr ""
+
+#: tmp/main.glade.h:14 tmp/common.glade.h:15
+msgid "gtk-save"
+msgstr ""
+
+#: tmp/main.glade.h:15 tmp/common.glade.h:16
+msgid "gtk-save-as"
+msgstr ""
+
+#: tmp/settings.glade.h:1
+msgid "Age"
+msgstr ""
+
+#: tmp/settings.glade.h:2
+msgid "Barcode sign-off"
+msgstr ""
+
+#: tmp/settings.glade.h:3
+msgid "Cancel"
+msgstr ""
+
+#: tmp/settings.glade.h:4
+msgid "Car"
+msgstr ""
+
+#: tmp/settings.glade.h:5
+msgid "Connectivity"
+msgstr ""
+
+#: tmp/settings.glade.h:6
+msgid "Name"
+msgstr ""
+
+#: tmp/settings.glade.h:8
+msgid "Save Settings"
+msgstr ""
+
+#: tmp/settings.glade.h:9
+msgid "radiobutton"
+msgstr ""
+
+#: tmp/home.glade.h:4
+msgid "Home"
+msgstr ""
+
+#: tmp/home.glade.h:6
+msgid "Return"
+msgstr ""
+
+#: tmp/home.glade.h:8
+msgid "Unused"
+msgstr ""
+
+#: tmp/sales.glade.h:1
+msgid "Complete"
+msgstr ""
+
+#: tmp/sales.glade.h:3
+msgid "label"
+msgstr ""
+
+#: tmp/common.glade.h:2
+msgid "Tabbed environment, see other glade files for tab content"
+msgstr ""

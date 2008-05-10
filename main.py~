@@ -27,6 +27,7 @@ import controller.settings as ctrlsettings
 import controller.ProductData as ctrlproductdata
 
 
+
 FILE_EXT = "cposs"
 APP_NAME = "cposs"
 
@@ -44,6 +45,7 @@ class cposs:
 
 
 		self.database=ctrlproductdata
+		print self.database.ProductDic(2)
 		self.mysettings=ctrlsettings.Settings()
 
 		# Set the project file
@@ -62,7 +64,7 @@ class cposs:
 
 		self.home = home.home(self,self.wTab)
 		self.sales = sales.sales(self,self.wTab)
-		self.sales2 = sales.sales(self,self.wTab,3) # syntax for calling a specific BasketID
+		self.sales2 = sales.sales(self,self.wTab,6) # syntax for calling a specific BasketID
 
 	
 		#Create the dictionary of events and create them
@@ -85,7 +87,7 @@ class cposs:
 		#Translation stuff
 
 		#Get the local directory since we are not installing anything
-		self.local_path = os.path.realpath(os.path.dirname(sys.argv[0]))
+		self.local_path = os.path.realpath(os.path.dirname(sys.argv[0])) + "/data/languages/"
 		# Init the list of languages to support
 		langs = []
 		#Check the default locale
