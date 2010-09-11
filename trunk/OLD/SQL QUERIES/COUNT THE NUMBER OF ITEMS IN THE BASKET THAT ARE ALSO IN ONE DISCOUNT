@@ -1,4 +1,0 @@
-SELECT COUNT(DISTINCT basket_sub.ItemID) FROM discounts_sub
-LEFT JOIN basket_sub ON basket_sub.ItemID = discounts_sub.ItemID
-LEFT JOIN basket ON basket_sub.BasketID = basket.BasketID
-WHERE basket.BasketID=2 AND discounts_sub.DiscountID=2
