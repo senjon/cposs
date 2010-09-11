@@ -1,0 +1,25 @@
+SELECT basket.BasketID, products_sub.ItemID, products.ProductID, products.Price AS RRP,
+CASE discounts.DiscountType
+WHEN 2 THEN 
+# If we have this discount then:
+# We check that the number of products in the basket eligible for this discount is equal to the number of 
+# products required for this discount to be activated
+IF(( # Logic is to list all posible items in the discount and check they exist in the basket
+	SELECT COUNT(DISTINCT a1.ItemID) FROM discounts_sub a1
+	LEFT JOIN basket_sub a2 ON a2.ItemID = a1.ItemID
+	LEFT JOIN basket a3 ON a2.BasketID = a3.BasketID
+	WHERE basket.BasketID=a2.BasketID AND discounts_sub.DiscountID=a1.DiscountID
+)
+=(SELECT COUNT(DISTINCT a1.ItemID) FROM discounts_sub a1 WHERE discounts_sub.DiscountID=a1.DiscountID),IF(products_sub.ItemID=(SELECT DISTINCT a1.ItemID FROM discounts_sub a1 WHERE discounts_sub.DiscountID=a1.DiscountID limit 1),discounts.DiscountValue,2),products.Price)
+
+WHEN 1 THEN products.Price/100 * discounts.DiscountValue
+WHEN 3 THEN 'Third'
+ELSE 'Other'
+END
+AS Price,
+discounts.DiscountID FROM basket_sub
+LEFT JOIN products_sub ON basket_sub.ItemID = products_sub.ItemID
+LEFT JOIN products ON products_sub.ProductID = products.ProductID
+LEFT JOIN basket ON basket_sub.BasketID = basket.BasketID
+LEFT JOIN discounts_sub ON basket_sub.ItemID = discounts_sub.ItemID
+LEFT JOIN discounts ON discounts.DiscountID = discounts_sub.DiscountID
