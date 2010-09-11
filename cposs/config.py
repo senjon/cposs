@@ -1,0 +1,1 @@
+PRODUCT_PATH = '/home/phil/Development/cposs/data/products'    
