@@ -5,7 +5,7 @@ cposs documentation
 
 class Discount(object):
     """
-    """
+    """        
     def __init__(self, product, establishment_conditions, discount_ammount):
         self.product_rrp = product.rrp
         self.product_barcode = product.barcode
@@ -16,6 +16,7 @@ class Discount(object):
         # TODO, consider conditions of allowed discounts
         return True
     
+    @property
     def price(self):
         raise NotImplementedError()
     
@@ -31,6 +32,7 @@ class Discount(object):
 class MoneyOffDiscount(Discount):
     """
     """
+    @property
     def price(self):
         return self.product_rrp - self.discount_ammount
     
@@ -38,6 +40,7 @@ class MoneyOffDiscount(Discount):
 class NewPriceDiscount(Discount):
     """
     """
+    @property
     def price(self):
         return self.discount_ammount
     
@@ -45,5 +48,6 @@ class NewPriceDiscount(Discount):
 class PercentageDiscount(Discount):
     """
     """
+    @property
     def price(self):
         return self.product_rrp / 100 * (100-self.discount_ammount)
