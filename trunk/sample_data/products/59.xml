@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<product barcode="59" name="Hollister thin jumper" price="33.99">
+  <description>
+    Longsleve thin jumper made by Hollister
+  </description>
+  <features>
+    <feature>
+      <name>
+        color
+      </name>
+      <value>
+        grey
+      </value>
+    </feature>
+    <feature>
+      <name>
+        color
+      </name>
+      <value>
+        blue
+      </value>
+    </feature>
+  </features>
+  <discounts/>
+</product>
