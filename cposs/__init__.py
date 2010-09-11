@@ -73,12 +73,12 @@ class Department(object):
         
 if __name__ == "__main__":
     
-    daisy = Business('Lazy Daisy')
-    rhos_shop = Establishment('79 The Promenade')
+    foo_bar = Business('FOO BAR')
+    london_shop = Establishment('101 Oxford Street, London')
     
     jumpers = Department('Jumpers')
-    daisy.departments.append(jumpers)
-    daisy.establishments.append(rhos_shop)
+    foo_bar.departments.append(jumpers)
+    foo_bar.establishments.append(london_shop)
     
     name = 'Hollister thin jumper'
     description = 'Longsleve thin jumper made by Hollister'
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     jumpers.get_product(60).save()
     jumpers.get_product(59).save()
-    
-    a = cposs.basket.Basket(None, [product_60, product_59], False)
-    
+    import cposs.basket
+    a = cposs.basket.Basket(london_shop, None, [product_60, product_59], False)
     print a
+    print a.total()

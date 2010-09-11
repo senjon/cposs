@@ -39,6 +39,7 @@ class Basket(object):
     def total(self):
         total = 0.0
         for bp in self.basket_products:
+            print repr(bp.price(self.establishment))
             total += bp.price(self.establishment)
         return total
               
@@ -74,14 +75,14 @@ class BasketProduct(object):
         if not self.discount:
             return self.rrp
         else:
-            return self.discount.price()
+            return self.discount.price
             
         
 if __name__ == "__main__":
     import cposs
-    rhos_shop = cposs.Establishment('79 The Promenade')
+    shop = cposs.Establishment('FOO BAR')
     
     p = cposs.Product.get_product(60)
-    a = Basket(rhos_shop, None, [p])
+    a = Basket(shop, None, [p])
     print a
     print a.total()

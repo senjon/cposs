@@ -5,6 +5,7 @@ import xml.dom.minidom
 import os
 
 import cposs.config
+import cposs.discount
 
 def xml_getText(nodelist):
     rc = []
@@ -16,6 +17,7 @@ def xml_getText(nodelist):
 class Product(object):
     """
     TODO
+    
     """
     @staticmethod
     def get_product(barcode):
@@ -25,11 +27,14 @@ class Product(object):
                     
         dom = xml.dom.minidom.parse(path)
         product_node = dom.getElementsByTagName("product")[0]
-        name_node = product_node.getElementsByTagName("name")[0]
-        name = xml_getText(name_node.childNodes)
+        description_node = product_node.getElementsByTagName("description")[0]
+        description = xml_getText(description_node.childNodes)
         
-        price = product_node.getElementsByTagName("name")[0]
-        discounts = xml_getText(name_node.childNodes)
+        name = product_node.attributes['name'].value
+        price = float(product_node.attributes['price'].value)
+        _barcode = product_node.attributes['barcode'].value
+        if barcode != int(_barcode):
+            raise ValueError('The product file is inconsistent with the barcode in the file.')
         
         features = []
         features_node = dom.getElementsByTagName("features")[0]
@@ -41,16 +46,24 @@ class Product(object):
         
             features.append(Feature(feature_name, feature_value))
         
-        discounts = []
-        discounts_node = dom.getElementsByTagName("discounts")[0]
-        for discount_node in discounts_node.getElementsByTagName("discount"):
-            type_node = discount_node.getElementsByTagName("type")[0]
-            ammount_node = discount_node.getElementsByTagName("discount_ammount")[0]
+        product = Product(barcode, name, description, price, features)
         
-            # discounts.append(cposs.discount.Discount(feature_name, feature_value))
-
+        discounts_node = dom.getElementsByTagName("discounts")[0]
+        discount_map = {'MoneyOffDiscount':cposs.discount.MoneyOffDiscount, 
+                        'NewPriceDiscount':cposs.discount.NewPriceDiscount,
+                        'PercentageDiscount':cposs.discount.PercentageDiscount,
+                        }
+        for discount_node in discounts_node.getElementsByTagName("discount"):
+            type = discount_node.attributes['type'].value
+            amount = float(discount_node.attributes['discount_ammount'].value)
+            try:
+                discount_class = discount_map[type]
+            except KeyError:
+                raise ValueError('Unknown discount type')
             
-        return Product(barcode, name, None, 0, features)
+            product.discounts_available.append(discount_class(product, None, amount))
+
+        return product    
     
     def __init__(self, barcode, name, description, rrp, features, discounts=None, _product_id=None ):
         """
@@ -148,5 +161,8 @@ class Feature(object):
 
        
 if __name__ == '__main__':
+    p = Product.get_product(60)
+    print p
+    p.save()
     p = Product.get_product(60)
     print p
